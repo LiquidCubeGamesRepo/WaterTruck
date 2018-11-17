@@ -4,14 +4,27 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour {
 
+    public bool CanMove { get; set; }
+
     [SerializeField] float maxCarSpeed;
     [SerializeField] float accelerationSpeed;
     [SerializeField] WheelJoint2D[] wheels;
 
     float carSpeed;
 
+    private void Start(){
+        CanMove = false;
+        GameController.Instance.startGameEvent.AddListener(StartGame);
+    }
+
+    void StartGame() {
+        CanMove = true;
+    }
+
     // Update is called once per frame
     void Update () {
+
+        if (!CanMove) return;
 
 #if UNITY_EDITOR
         if (Input.GetButton("Accel"))
@@ -24,7 +37,7 @@ public class CarController : MonoBehaviour {
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            text.text = touch.position.ToString();
+
             if (touch.position.x > Screen.width * 0.5f)
                 Acceleration();
             else if(touch.position.x < Screen.width * 0.5f)
@@ -37,7 +50,7 @@ public class CarController : MonoBehaviour {
 
     }
 
-    private void NoInput()
+    public void NoInput()
     {
         carSpeed -= Time.deltaTime * accelerationSpeed;
         foreach (var wheel in wheels){
@@ -48,7 +61,7 @@ public class CarController : MonoBehaviour {
         }
     }
 
-    private void Break()
+    public void Break()
     {
         foreach (var wheel in wheels){
             var motor = wheel.motor;
@@ -56,9 +69,10 @@ public class CarController : MonoBehaviour {
             wheel.motor = motor;
             wheel.useMotor = true;
         }
+        carSpeed = 0;
     }
 
-    private void Acceleration()
+    public void Acceleration()
     {
         carSpeed += Time.deltaTime * accelerationSpeed;
         foreach (var wheel in wheels)

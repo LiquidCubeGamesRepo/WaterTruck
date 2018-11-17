@@ -14,8 +14,12 @@ public class LiquidCounter : MonoBehaviour {
     public WaterCountChange waterCountChange;
 
     void Start () {
-        StartCoroutine(CountLiquid());	
+        GameController.Instance.startGameEvent.AddListener(StartGame);
 	}
+
+    void StartGame(){
+        StartCoroutine(CountLiquid());
+    }
 
     Collider2D []cols = new Collider2D[50];
     private IEnumerator CountLiquid()
