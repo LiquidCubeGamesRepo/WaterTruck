@@ -10,8 +10,6 @@ public class CarController : MonoBehaviour {
 
     float carSpeed;
 
-    public UnityEngine.UI.Text text;
-
     // Update is called once per frame
     void Update () {
 
@@ -35,11 +33,17 @@ public class CarController : MonoBehaviour {
         else
             NoInput();
 #endif
+        carSpeed = Mathf.Clamp(carSpeed, 0, maxCarSpeed);
+
     }
 
     private void NoInput()
     {
+        carSpeed -= Time.deltaTime * accelerationSpeed;
         foreach (var wheel in wheels){
+            var motor = wheel.motor;
+            motor.motorSpeed = carSpeed;
+            wheel.motor = motor;
             wheel.useMotor = false;
         }
     }
@@ -56,7 +60,6 @@ public class CarController : MonoBehaviour {
 
     private void Acceleration()
     {
-        carSpeed = Mathf.Clamp(carSpeed, 0, maxCarSpeed);
         carSpeed += Time.deltaTime * accelerationSpeed;
         foreach (var wheel in wheels)
         {
