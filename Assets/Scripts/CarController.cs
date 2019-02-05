@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,9 @@ public class CarController : MonoBehaviour {
     [SerializeField] float maxCarSpeed;
     [SerializeField] float accelerationSpeed;
     [SerializeField] WheelJoint2D[] wheels;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] List<PolygonCollider2D> carColliders;
+    [SerializeField] GameObject additionWheelObject;
 
     float carSpeed;
     LiquidCounter lc;
@@ -61,6 +65,22 @@ public class CarController : MonoBehaviour {
 #endif
         carSpeed = Mathf.Clamp(carSpeed, 0, maxCarSpeed);
 
+    }
+
+    internal void ChangeCar()
+    {
+        //spriteRenderer.sprite = GameController.Instance.carSprites[GameController.Instance.playerSettings.currentCar];
+        //foreach (var col in carColliders) {
+        //    col.enabled = false;
+        //}
+        ////carColliders[GameController.Instance.playerSettings.currentCar].enabled = true;
+
+        //if(GameController.Instance.playerSettings.currentCar == 1)
+        //{
+        //    additionWheelObject.SetActive(true);
+        //}
+        //else
+        //    additionWheelObject.SetActive(false);
     }
 
     public void NoInput()

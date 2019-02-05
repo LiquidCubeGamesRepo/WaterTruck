@@ -53,7 +53,7 @@ public class TerrainGenerator : MonoBehaviour
             }
         }
 
-        if (car.isVisible)
+        if (car.isVisible && car.CanMove)
         {
             currentTerrain.rect.localPosition -= (Vector3.right * car.CarSpeed * currentTerrain.speed * Time.deltaTime);
             if (prevTerrain != null) prevTerrain.rect.localPosition -= (Vector3.right * car.CarSpeed * prevTerrain.speed * Time.deltaTime);

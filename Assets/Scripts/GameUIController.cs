@@ -16,8 +16,9 @@ public class GameUIController : MonoBehaviour {
     [SerializeField] Text distaneReachedText;
     [SerializeField] Text bestDistanceText;
 
-    [SerializeField] Text waterCountText;
+    [SerializeField] Image waterCountText;
     [SerializeField] Text distanceProggresText;
+    [SerializeField] Text coinsCounter;
 
     LiquidCounter lc;
     DistanceMeter dm;
@@ -31,12 +32,16 @@ public class GameUIController : MonoBehaviour {
         dm.distanceCountChange.AddListener(UpdateDistanceProggres);
 
         cc = FindObjectOfType<CarController>();
-        
+
+        CollectableItem.coinsCollected.AddListener(UpdateCoins);
+
         restartButton.onClick.AddListener(RestartGame);
         pauseButton.onClick.AddListener(PauseGame);
 
         pausePanel.SetActive(false);
         newRecordText.SetActive(false);
+
+        UpdateCoins();
     }
 
     private void PauseGame()
@@ -45,14 +50,14 @@ public class GameUIController : MonoBehaviour {
         cc.DestroyCar(0);
         dm.Stop();
 
-        bestDistanceText.text = "Best Distance: " + GameController.Instance.playerSettings.bestDistance;
+        //bestDistanceText.text = "Best Distance: " + GameController.Instance.playerSettings.bestDistance;
         distaneReachedText.text = "Distance: " + Mathf.RoundToInt(dm.distance);
 
-        if (GameController.Instance.playerSettings.bestDistance < Mathf.RoundToInt(dm.distance))
-        {
-            newRecordText.SetActive(true);
-            GameController.Instance.playerSettings.bestDistance = Mathf.RoundToInt(dm.distance);
-        }
+        //if (GameController.Instance.playerSettings.bestDistance < Mathf.RoundToInt(dm.distance))
+        //{
+        //    newRecordText.SetActive(true);
+        //    GameController.Instance.playerSettings.bestDistance = Mathf.RoundToInt(dm.distance);
+        //}
     }
 
     private void RestartGame()
@@ -67,12 +72,17 @@ public class GameUIController : MonoBehaviour {
         }
 
         //update score
-        waterCountText.text = string.Format("{0}/50 L", value);
+        waterCountText.fillAmount = value / 50f;
     }
 
     public void UpdateDistanceProggres(int value)
     {
         distanceProggresText.text = string.Format("{0} M", value);
+    }
+
+    public void UpdateCoins()
+    {
+        //coinsCounter.text = GameController.Instance.playerSettings.coins.ToString();
     }
 
 }

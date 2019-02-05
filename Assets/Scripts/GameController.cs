@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
@@ -11,20 +12,36 @@ public class GameController : MonoBehaviour {
         if (Instance == null) Instance = this;
         else Destroy(this.gameObject);
 
+        DontDestroyOnLoad(this.gameObject);
+
+        Data.LoadSettings();
     }
 
-    public PlayerSettings playerSettings;
+    public GameData gameData;
 
     public bool IsGamePlaying { get; set; }
     public UnityEvent startGameEvent;
 
     public bool canStart = false;
     [SerializeField] Transform target;
-
+    [SerializeField] Material liquidMaterial;
+    [SerializeField] public Sprite[] carSprites;
+    [SerializeField] Color[] carColors;
+    [SerializeField] AudioSource audioSource;
     CarController carController;
 
-    private void Start(){
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
         Init();
+    }
+
+    void OnDisable()  {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void Init(){
@@ -33,6 +50,20 @@ public class GameController : MonoBehaviour {
         target = FindObjectOfType<CenterTarget>().transform;
 
         StartCoroutine(MoveToTarget());
+        SetCarProp();
+
+        if (gameData.audioOn) { 
+            if(!audioSource.isPlaying)
+                audioSource.Play();
+        }
+        else
+            audioSource.Stop();
+    }
+
+    public void SetCarProp()
+    {
+        //carController.ChangeCar();
+        //liquidMaterial.SetColor("_Color", carColors[gameData.currentLiquid]);
     }
 
     private IEnumerator MoveToTarget()
@@ -58,7 +89,17 @@ public class GameController : MonoBehaviour {
     }
 
     public void RestartGame(){
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Map");
+        SceneManager.LoadScene("Map");
         Init();
+    }
+
+    public bool ToggleSound()
+    {
+        gameData.audioOn = !gameData.audioOn;
+
+        if (gameData.audioOn) audioSource.Play();
+        else audioSource.Stop();
+
+        return gameData.audioOn;
     }
 }

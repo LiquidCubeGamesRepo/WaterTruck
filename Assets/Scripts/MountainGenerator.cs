@@ -76,7 +76,7 @@ public class MountainGenerator : MonoBehaviour {
             }
         }
 
-        if (car.isVisible)
+        if (car.isVisible && car.CanMove)
         {
             currentFarMountain.rect.localPosition -= (Vector3.right * car.CarSpeed * currentFarMountain.speed * Time.deltaTime);
             if(prevFarMountain != null) prevFarMountain.rect.localPosition -= (Vector3.right * car.CarSpeed * currentFarMountain.speed * Time.deltaTime);

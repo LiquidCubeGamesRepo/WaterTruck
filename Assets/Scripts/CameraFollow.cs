@@ -14,6 +14,7 @@ public class CameraFollow : MonoBehaviour {
     private void Start(){
         GameController.Instance.startGameEvent.AddListener(StartGame);
         cams = GetComponentsInChildren<Camera>();
+        target = FindObjectOfType<CarController>().transform;
     }
 
     private void StartGame(){

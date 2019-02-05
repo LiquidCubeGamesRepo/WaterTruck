@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using System.Linq;
 public class MapGenerator : MonoBehaviour {
 
     [SerializeField] Transform player;
@@ -11,7 +11,11 @@ public class MapGenerator : MonoBehaviour {
     [SerializeField] float offsetY;
     [SerializeField] float distanceToSpawnModule;
     [SerializeField] float timeToDestroyModule = 1f;
-    
+
+    [SerializeField] GameObject collectablePrefab;
+    [Range(0,1)]
+    [SerializeField] float collectableChance = 0.3f;
+
     List<GameObject> modules = new List<GameObject>();
 
     private Transform modulesParent;
@@ -30,6 +34,7 @@ public class MapGenerator : MonoBehaviour {
         modulesCounter--;
 
         GameController.Instance.startGameEvent.AddListener(StartGame);
+        player = FindObjectOfType<CarController>().transform;
     }
 
     private void StartGame(){
@@ -84,6 +89,19 @@ public class MapGenerator : MonoBehaviour {
                 module.transform.position = new Vector2(modulesCounter * offsetX, offsetY);
                 modules.Add(module);
                 modulesCounter++;
+
+                    foreach (Transform child in module.transform)
+                    {
+                        if (Random.Range(0, 100) < collectableChance * 100)
+                        {
+                            var sr = child.GetComponent<SpriteRenderer>();
+                            var points = child.GetComponent<PolygonCollider2D>().points;
+                            var posY = points.Max(x => x.y);
+
+                            Instantiate(collectablePrefab, new Vector2(child.position.x, posY-1.5f), Quaternion.identity);
+                        }
+                    }
+
             }
         }
     }
