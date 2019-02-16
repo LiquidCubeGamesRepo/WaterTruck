@@ -5,6 +5,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
+public enum Mode
+{
+    Menu,
+    StartLevel
+}
+
 public class GameController : MonoBehaviour {
 
     public static GameController Instance { get; private set; }
@@ -18,17 +24,27 @@ public class GameController : MonoBehaviour {
     }
 
     public GameData gameData;
-
+    public Mode loadMode;
     public bool IsGamePlaying { get; set; }
     public UnityEvent startGameEvent;
 
     public bool canStart = false;
+    public bool raceOver = false;
     [SerializeField] Transform target;
     [SerializeField] Material liquidMaterial;
     [SerializeField] public Sprite[] carSprites;
     [SerializeField] Color[] carColors;
     [SerializeField] AudioSource audioSource;
     CarController carController;
+
+    public Sprite SelectedCar
+    {
+        get { return carSprites[gameData.SelectedCar]; }
+    }
+    public Color SelectedFluid
+    {
+        get { return carColors[gameData.SelectedFluid]; }
+    }
 
     void OnEnable()
     {
@@ -37,6 +53,16 @@ public class GameController : MonoBehaviour {
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if(loadMode == Mode.StartLevel)
+        {
+            StartGame();
+            IsGamePlaying = false;
+        }
+        else
+        {
+            IsGamePlaying = true;
+        }
+
         Init();
     }
 
@@ -45,7 +71,8 @@ public class GameController : MonoBehaviour {
     }
 
     public void Init(){
-        IsGamePlaying = false;
+        
+        raceOver = false;
         carController = FindObjectOfType<CarController>();
         target = FindObjectOfType<CenterTarget>().transform;
 
@@ -62,8 +89,8 @@ public class GameController : MonoBehaviour {
 
     public void SetCarProp()
     {
-        //carController.ChangeCar();
-        //liquidMaterial.SetColor("_Color", carColors[gameData.currentLiquid]);
+        carController.ChangeCar();
+        liquidMaterial.SetColor("_Color", SelectedFluid);
     }
 
     private IEnumerator MoveToTarget()
@@ -73,13 +100,14 @@ public class GameController : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
 
         var dist = Vector2.Distance(carController.transform.position, target.position);
-        while (dist > 2f)
+
+        while (dist > 0.25f)
         {
             dist = Vector2.Distance(carController.transform.position, target.position);
-            carController.Acceleration();
+            carController.transform.position = Vector2.Lerp(carController.transform.position, target.position, Time.deltaTime * 5f);
             yield return new WaitForEndOfFrame();
         }
-        carController.Break();
+
         canStart = true;
     }
 
@@ -101,5 +129,13 @@ public class GameController : MonoBehaviour {
         else audioSource.Stop();
 
         return gameData.audioOn;
+    }
+
+    public void FinishRace()
+    {
+        gameData.currentLevel++;
+        carController.CanMove = false;
+        raceOver = true;
+        Data.SaveSettings();
     }
 }

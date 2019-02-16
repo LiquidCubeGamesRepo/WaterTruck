@@ -7,6 +7,8 @@ public class MapGenerator : MonoBehaviour {
 
     [SerializeField] Transform player;
     [SerializeField] List<GameObject> ModulesPrefabs;
+    [SerializeField] GameObject startModule;
+    [SerializeField] GameObject finishModule;
     [SerializeField] float offsetX;
     [SerializeField] float offsetY;
     [SerializeField] float distanceToSpawnModule;
@@ -20,21 +22,31 @@ public class MapGenerator : MonoBehaviour {
 
     private Transform modulesParent;
     private int modulesCounter;
+    private DistanceMeter distanceMeter;
+
+    private bool finishSpawned;
 
     public void Start()
     {
         modulesParent = new GameObject("Map").transform;
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
-            var module = Instantiate(ModulesPrefabs[0], modulesParent);
+            GameObject mod = i == 1 ? startModule : ModulesPrefabs[0];
+
+            var module = Instantiate(mod, modulesParent);
             module.transform.position = new Vector2(i * offsetX - offsetX, offsetY);
             modules.Add(module);
             modulesCounter++;
         }
+
         modulesCounter--;
 
         GameController.Instance.startGameEvent.AddListener(StartGame);
         player = FindObjectOfType<CarController>().transform;
+        distanceMeter = player.GetComponent<DistanceMeter>();
+
+        //Calculate max modules in level
+        distanceMeter.moduleFinishDistance = 100 + (GameController.Instance.gameData.currentLevel) * 25;
     }
 
     private void StartGame(){
@@ -43,7 +55,7 @@ public class MapGenerator : MonoBehaviour {
 
     private IEnumerator DestroyModules()
     {
-        while (true)
+        while (!GameController.Instance.raceOver)
         {
             if (modules.Count > 0)
             { 
@@ -81,14 +93,24 @@ public class MapGenerator : MonoBehaviour {
         if (player.position.y < -8f) return;
 
         if(modules.Count > 0)
-        if (modules[modules.Count - 1]) { 
-            var dist = Vector2.Distance(player.position, modules[modules.Count-1].transform.position);
-            if (dist < distanceToSpawnModule)
-            {
-                var module = Instantiate(ModulesPrefabs[Random.Range(0, ModulesPrefabs.Count)], modulesParent);
-                module.transform.position = new Vector2(modulesCounter * offsetX, offsetY);
-                modules.Add(module);
-                modulesCounter++;
+            if (modules[modules.Count - 1]) { 
+                var dist = Vector2.Distance(player.position, modules[modules.Count-1].transform.position);
+                if (dist < distanceToSpawnModule)
+                {
+                    GameObject mod = null;
+
+                    if ((distanceMeter.distance > distanceMeter.moduleFinishDistance - distanceToSpawnModule * 3) && !finishSpawned)
+                    {
+                        mod = finishModule;
+                        finishSpawned = true;
+                    }
+                    else
+                        mod = ModulesPrefabs[Random.Range(0, ModulesPrefabs.Count)];
+
+                    var module = Instantiate(mod, modulesParent);
+                    module.transform.position = new Vector2(modulesCounter * offsetX, offsetY);
+                    modules.Add(module);
+                    modulesCounter++;
 
                     foreach (Transform child in module.transform)
                     {
@@ -98,11 +120,10 @@ public class MapGenerator : MonoBehaviour {
                             var points = child.GetComponent<PolygonCollider2D>().points;
                             var posY = points.Max(x => x.y);
 
-                            Instantiate(collectablePrefab, new Vector2(child.position.x, posY-1.5f), Quaternion.identity);
+                            Instantiate(collectablePrefab, new Vector2(child.position.x, posY - 1.5f), Quaternion.identity);
                         }
                     }
-
+                }
             }
-        }
     }
 }

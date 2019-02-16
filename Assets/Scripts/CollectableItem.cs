@@ -9,7 +9,7 @@ public class CollectableItem : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //GameController.Instance.playerSettings.coins++;
+        GameController.Instance.gameData.coins++;
         coinsCollected.Invoke();
         Destroy(this.gameObject);
     }

@@ -162,7 +162,7 @@ public class StorePanel : MonoBehaviour {
 
         data.storeFluids[rand].isUnlocked = true;
         data.storeFluids[rand].isSelected = true;
-        data.coins -= 300;
+        data.coins -= 150;
 
         UpdateContent(GameController.Instance.gameData.storeFluids, fluidContent);
         SnapToElement(rand, fluidContent);

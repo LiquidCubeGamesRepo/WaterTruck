@@ -7,17 +7,24 @@ using UnityEngine.UI;
 
 public class GameUIController : MonoBehaviour {
 
+    [SerializeField] GameObject endGamePanel;
     [SerializeField] GameObject pausePanel;
+    [SerializeField] GameObject victoryPanel;
 
     [SerializeField] Button restartButton;
-    [SerializeField] Button pauseButton;
+    [SerializeField] Button restartButton1;
 
-    [SerializeField] GameObject newRecordText;
-    [SerializeField] Text distaneReachedText;
-    [SerializeField] Text bestDistanceText;
+    [SerializeField] Button backToMenuButton;
+    [SerializeField] Button backToMenuButton1;
+    [SerializeField] Button backToMenuButton2;
+    [SerializeField] Button nextLevelButton;
+    [SerializeField] Button pauseButton;
+    [SerializeField] Button continueButton;
+
+    [SerializeField] Text currentLevelText;
 
     [SerializeField] Image waterCountText;
-    [SerializeField] Text distanceProggresText;
+    [SerializeField] Image distanceProggresImage;
     [SerializeField] Text coinsCounter;
 
     LiquidCounter lc;
@@ -36,22 +43,38 @@ public class GameUIController : MonoBehaviour {
         CollectableItem.coinsCollected.AddListener(UpdateCoins);
 
         restartButton.onClick.AddListener(RestartGame);
+        restartButton1.onClick.AddListener(RestartGame);
         pauseButton.onClick.AddListener(PauseGame);
+        continueButton.onClick.AddListener(UnPauseGame);
+        backToMenuButton.onClick.AddListener(BackToMainScreen);
+        backToMenuButton1.onClick.AddListener(BackToMainScreen);
+        backToMenuButton2.onClick.AddListener(BackToMainScreen);
+        nextLevelButton.onClick.AddListener(RestartGame);
 
-        pausePanel.SetActive(false);
-        newRecordText.SetActive(false);
+        endGamePanel.SetActive(false);
+
+        currentLevelText.text = string.Format("Level {0}", GameController.Instance.gameData.currentLevel);
 
         UpdateCoins();
+    }
+
+    private void UnPauseGame()
+    {
+        pausePanel.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     private void PauseGame()
     {
         pausePanel.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    private void GameOver()
+    {
+        endGamePanel.SetActive(true);
         cc.DestroyCar(0);
         dm.Stop();
-
-        //bestDistanceText.text = "Best Distance: " + GameController.Instance.playerSettings.bestDistance;
-        distaneReachedText.text = "Distance: " + Mathf.RoundToInt(dm.distance);
 
         //if (GameController.Instance.playerSettings.bestDistance < Mathf.RoundToInt(dm.distance))
         //{
@@ -62,27 +85,40 @@ public class GameUIController : MonoBehaviour {
 
     private void RestartGame()
     {
+        GameController.Instance.loadMode = Mode.StartLevel;
         GameController.Instance.RestartGame();
+        Time.timeScale = 1f;
+    }
+
+    private void BackToMainScreen()
+    {
+        GameController.Instance.loadMode = Mode.Menu;
+        GameController.Instance.RestartGame();
+        Time.timeScale = 1f;
     }
 
     public void UpdateWaterCountText(int value)
     {
         if (value <= lc.waterGameoverCount){
-            PauseGame();
+            GameOver();
         }
 
         //update score
-        waterCountText.fillAmount = value / 50f;
+        waterCountText.fillAmount = value / 45f;
     }
 
     public void UpdateDistanceProggres(int value)
     {
-        distanceProggresText.text = string.Format("{0} M", value);
+        distanceProggresImage.fillAmount = dm.ProgressDistance;
     }
 
     public void UpdateCoins()
     {
-        //coinsCounter.text = GameController.Instance.playerSettings.coins.ToString();
+        coinsCounter.text = GameController.Instance.gameData.coins.ToString();
     }
 
+    public void FinishRace()
+    {
+        victoryPanel.SetActive(true);
+    }
 }

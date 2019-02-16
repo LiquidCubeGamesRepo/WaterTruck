@@ -34,13 +34,12 @@ public class CarController : MonoBehaviour {
         CanMove = true;
     }
 
-    // Update is called once per frame
     void Update () {
+
+        if (!CanMove) return;
 
         if (transform.position.y < -8f) isVisible = false;
         else isVisible = true;
-
-        if (!CanMove) return;
 
 #if UNITY_EDITOR
         if (Input.GetButton("Accel"))
@@ -49,6 +48,7 @@ public class CarController : MonoBehaviour {
         //    Break();
         else
             NoInput();
+
 #elif UNITY_ANDROID
         if (Input.touchCount > 0)
         {
@@ -63,19 +63,17 @@ public class CarController : MonoBehaviour {
         else
             NoInput();
 #endif
-        carSpeed = Mathf.Clamp(carSpeed, 0, maxCarSpeed);
-
     }
 
     internal void ChangeCar()
     {
-        //spriteRenderer.sprite = GameController.Instance.carSprites[GameController.Instance.playerSettings.currentCar];
-        //foreach (var col in carColliders) {
-        //    col.enabled = false;
-        //}
-        ////carColliders[GameController.Instance.playerSettings.currentCar].enabled = true;
+        spriteRenderer.sprite = GameController.Instance.SelectedCar;
+        foreach (var col in carColliders) {
+            col.enabled = false;
+        }
+        carColliders[GameController.Instance.gameData.SelectedCar].enabled = true;
 
-        //if(GameController.Instance.playerSettings.currentCar == 1)
+        //if (GameController.Instance.playerSettings.currentCar == 1)
         //{
         //    additionWheelObject.SetActive(true);
         //}
@@ -85,41 +83,34 @@ public class CarController : MonoBehaviour {
 
     public void NoInput()
     {
-        carSpeed -= Time.deltaTime * accelerationSpeed;
-        foreach (var wheel in wheels){
-            var motor = wheel.motor;
-            motor.motorSpeed = carSpeed;
-            wheel.motor = motor;
-            wheel.useMotor = false;
+        var hit = Physics2D.Raycast(transform.position, -transform.up, 0.25f, ~(1 << 8));
+        if (!hit)
+        {
+            rig.AddForceAtPosition((-Vector2.right + Vector2.up) * accelerationSpeed * 0.25f * Time.deltaTime,
+                      wheels[1].connectedBody.transform.position);
+            Debug.Log(hit.collider);
         }
-    }
-
-    public void Break()
-    {
-        foreach (var wheel in wheels){
-            var motor = wheel.motor;
-            motor.motorSpeed = 0;
-            wheel.motor = motor;
-            wheel.useMotor = true;
-        }
-        carSpeed = 0;
     }
 
     public void Acceleration()
     {
-        carSpeed += Time.deltaTime * accelerationSpeed;
-        foreach (var wheel in wheels)
-        {
-            var motor = wheel.motor;
-            motor.motorSpeed = -carSpeed;
-            wheel.motor = motor;
-            wheel.useMotor = true;
-        }
+        rig.AddForceAtPosition((Vector2.right + Vector2.up) * accelerationSpeed * Time.deltaTime, 
+                               wheels[0].connectedBody.transform.position);
+
+        Debug.DrawLine(wheels[0].connectedBody.transform.position, wheels[0].connectedBody.transform.position + (Vector3)(Vector2.right + Vector2.up));
+
+        //foreach (var wheel in wheels)
+        //{
+        //    var motor = wheel.motor;
+        //    motor.motorSpeed = -carSpeed;
+        //    wheel.motor = motor;
+        //    //wheel.useMotor = true;
+        //}
     }
 
     public void DestroyCar(int waterCount){
 
-        if(waterCount <= lc.waterGameoverCount) {
+        if (waterCount <= lc.waterGameoverCount) {
             CanMove = false;
             NoInput();
         }

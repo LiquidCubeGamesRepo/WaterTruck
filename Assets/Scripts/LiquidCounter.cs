@@ -31,6 +31,8 @@ public class LiquidCounter : MonoBehaviour {
 
     private void WaterParticleDestroyed(WaterParticle water)
     {
+        if (GameController.Instance.raceOver) return;
+
         waterList.Remove(water);
         waterCountChange.Invoke(waterList.Count);
     }

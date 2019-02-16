@@ -10,7 +10,10 @@ public class DistanceMeter : MonoBehaviour {
     public class DistanceCountChange : UnityEvent<int> { }
     public DistanceCountChange distanceCountChange;
 
+    public float ProgressDistance { get { return Mathf.Clamp(distance / moduleFinishDistance,0,1); } }
+
     public float distance = 0;
+    public float moduleFinishDistance;
 
     void Start(){
         GameController.Instance.startGameEvent.AddListener(StartGame);

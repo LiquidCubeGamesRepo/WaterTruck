@@ -15,6 +15,12 @@ public class CameraFollow : MonoBehaviour {
         GameController.Instance.startGameEvent.AddListener(StartGame);
         cams = GetComponentsInChildren<Camera>();
         target = FindObjectOfType<CarController>().transform;
+        target.GetComponent<LiquidCounter>().waterCountChange.AddListener(GameOver);
+    }
+
+    private void GameOver(int count)
+    {
+        if (count == 0) follow = false;
     }
 
     private void StartGame(){

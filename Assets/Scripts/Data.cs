@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using System.Linq;
 
 public class Data {
 
@@ -71,9 +72,19 @@ public class GameData
 {
     public int coins;
     public bool audioOn;
+    public int currentLevel;
 
     public List<StoreItem> storeCars;
     public List<StoreItem> storeFluids;
+
+    public int SelectedCar
+    {
+       get { return storeCars.IndexOf(storeCars.SingleOrDefault(x => x.isSelected)); }
+    }
+    public int SelectedFluid
+    {
+        get { return storeFluids.IndexOf(storeFluids.SingleOrDefault(x => x.isSelected)); }
+    }
 }
 
 [Serializable]

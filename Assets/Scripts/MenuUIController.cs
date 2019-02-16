@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class MenuUIController : MonoBehaviour {
 
-    [SerializeField] Text bestDistanceText;
     [SerializeField] GameObject MenuCanvas;
     [SerializeField] GameObject GameCanvas;
     [SerializeField] StorePanel storePanel;
@@ -35,6 +34,12 @@ public class MenuUIController : MonoBehaviour {
         startGameButton.onClick.AddListener(StartGameClick);
         if (GameController.Instance.gameData.audioOn) soundButton.GetComponent<Image>().sprite = soundOnSprite;
         else soundButton.GetComponent<Image>().sprite = soundOffSprite;
+
+        if (GameController.Instance.loadMode == Mode.StartLevel)
+        {
+            MenuCanvas.SetActive(false);
+            GameCanvas.SetActive(true);
+        }
     }
 
     private void StartGameClick()
