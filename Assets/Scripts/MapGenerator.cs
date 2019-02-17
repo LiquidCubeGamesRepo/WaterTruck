@@ -14,7 +14,6 @@ public class MapGenerator : MonoBehaviour {
     [SerializeField] float distanceToSpawnModule;
     [SerializeField] float timeToDestroyModule = 1f;
 
-    [SerializeField] GameObject collectablePrefab;
     [Range(0,1)]
     [SerializeField] float collectableChance = 0.3f;
 
@@ -112,15 +111,15 @@ public class MapGenerator : MonoBehaviour {
                     modules.Add(module);
                     modulesCounter++;
 
-                    foreach (Transform child in module.transform)
+                    //Check for spawn collectables
+                    if (Random.Range(0, 100) < collectableChance * 100)
                     {
-                        if (Random.Range(0, 100) < collectableChance * 100)
+                        var child = module.transform.GetChild(3);
+                        var rand = Random.Range(0, child.childCount);
+                        for (int i = 0; i < child.childCount; i++)
                         {
-                            var sr = child.GetComponent<SpriteRenderer>();
-                            var points = child.GetComponent<PolygonCollider2D>().points;
-                            var posY = points.Max(x => x.y);
-
-                            Instantiate(collectablePrefab, new Vector2(child.position.x, posY - 1.5f), Quaternion.identity);
+                            if (i == rand) child.GetChild(i).gameObject.SetActive(true);
+                            else child.GetChild(i).gameObject.SetActive(false);
                         }
                     }
                 }

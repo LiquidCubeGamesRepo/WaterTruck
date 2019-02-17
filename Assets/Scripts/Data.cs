@@ -49,7 +49,7 @@ public class Data {
             }
 
             data.storeFluids = new List<StoreItem>();
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 6; i++)
             {
                 var item = new StoreItem();
                 if (i == 0)

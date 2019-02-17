@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CarController : MonoBehaviour {
 
@@ -20,6 +21,9 @@ public class CarController : MonoBehaviour {
     LiquidCounter lc;
     Rigidbody2D rig;
 
+    [HideInInspector]
+    public class FlyTimeEvent : UnityEvent<float> { }
+    public FlyTimeEvent flyTimeEvent = new FlyTimeEvent();
 
     private void Start(){
         CanMove = false;
@@ -34,12 +38,23 @@ public class CarController : MonoBehaviour {
         CanMove = true;
     }
 
+    float flyTime;
     void Update () {
 
         if (!CanMove) return;
 
         if (transform.position.y < -8f) isVisible = false;
         else isVisible = true;
+
+        if (!IsGrounded())
+        {
+            flyTime += Time.deltaTime;
+        }
+        else
+        {
+            if (flyTime > 0.1f) flyTimeEvent.Invoke(flyTime);
+            flyTime = 0;
+        }
 
 #if UNITY_EDITOR
         if (Input.GetButton("Accel"))
@@ -83,13 +98,16 @@ public class CarController : MonoBehaviour {
 
     public void NoInput()
     {
-        var hit = Physics2D.Raycast(transform.position, -transform.up, 0.25f, ~(1 << 8));
-        if (!hit)
+        if (!IsGrounded())
         {
             rig.AddForceAtPosition((-Vector2.right + Vector2.up) * accelerationSpeed * 0.25f * Time.deltaTime,
                       wheels[1].connectedBody.transform.position);
-            Debug.Log(hit.collider);
         }
+    }
+
+    public bool IsGrounded() {
+        Debug.DrawLine(transform.position, transform.position - Vector3.up);
+        return Physics2D.Raycast(transform.position, -Vector2.up, 1f, (1 << 0));
     }
 
     public void Acceleration()

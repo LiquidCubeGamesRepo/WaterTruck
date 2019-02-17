@@ -117,6 +117,7 @@ public class GameController : MonoBehaviour {
     }
 
     public void RestartGame(){
+        Data.SaveSettings();
         SceneManager.LoadScene("Map");
         Init();
     }

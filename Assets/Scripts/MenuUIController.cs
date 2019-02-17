@@ -12,7 +12,6 @@ public class MenuUIController : MonoBehaviour {
     [SerializeField] StorePanel storePanel;
     [SerializeField] AchievementPanel achievementPanel;
 
-
     [SerializeField] Sprite soundOnSprite;
     [SerializeField] Sprite soundOffSprite;
     [SerializeField] Button soundButton;
@@ -75,6 +74,7 @@ public class MenuUIController : MonoBehaviour {
         if (GC.canStart) { 
             MenuCanvas.SetActive(false);
             GameCanvas.SetActive(true);
+            GetComponent<GameUIController>().StartGame();
             GC.StartGame();
         }
     }

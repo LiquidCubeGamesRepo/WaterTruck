@@ -10,6 +10,7 @@ public class GameUIController : MonoBehaviour {
     [SerializeField] GameObject endGamePanel;
     [SerializeField] GameObject pausePanel;
     [SerializeField] GameObject victoryPanel;
+    [SerializeField] GameObject popup;
 
     [SerializeField] Button restartButton;
     [SerializeField] Button restartButton1;
@@ -23,13 +24,14 @@ public class GameUIController : MonoBehaviour {
 
     [SerializeField] Text currentLevelText;
 
-    [SerializeField] Image waterCountText;
+    [SerializeField] Image waterCountImage;
     [SerializeField] Image distanceProggresImage;
     [SerializeField] Text coinsCounter;
 
     LiquidCounter lc;
     DistanceMeter dm;
     CarController cc;
+
     private void Start()
     {
         lc = FindObjectOfType<LiquidCounter>();
@@ -39,6 +41,8 @@ public class GameUIController : MonoBehaviour {
         dm.distanceCountChange.AddListener(UpdateDistanceProggres);
 
         cc = FindObjectOfType<CarController>();
+
+        cc.flyTimeEvent.AddListener(FlyTimePopUp);
 
         CollectableItem.coinsCollected.AddListener(UpdateCoins);
 
@@ -56,6 +60,35 @@ public class GameUIController : MonoBehaviour {
         currentLevelText.text = string.Format("Level {0}", GameController.Instance.gameData.currentLevel);
 
         UpdateCoins();
+        StartGame();
+    }
+
+    private void FlyTimePopUp(float time)
+    {
+        if(time >= 0.5f && time < 0.8f)
+        {
+            InstantiatePopUp("GOOD !");
+        }
+        else if(time >= 0.8f && time < 1.25f)
+        {
+            InstantiatePopUp("AMAZING !");
+        }
+        else if(time > 1.25f)
+        {
+            InstantiatePopUp("PERFECT !");
+        }
+    }
+
+    private void InstantiatePopUp(string text)
+    {
+        var obj = Instantiate(popup, endGamePanel.transform.parent);
+        obj.GetComponent<Text>().text = text;
+        Destroy(obj, 2f);
+    }
+
+    public void StartGame()
+    {
+        waterCountImage.color = GameController.Instance.SelectedFluid;
     }
 
     private void UnPauseGame()
@@ -104,7 +137,7 @@ public class GameUIController : MonoBehaviour {
         }
 
         //update score
-        waterCountText.fillAmount = value / 45f;
+        waterCountImage.fillAmount = value / 50f;
     }
 
     public void UpdateDistanceProggres(int value)
