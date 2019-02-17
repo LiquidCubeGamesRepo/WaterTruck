@@ -63,27 +63,31 @@ public class GameUIController : MonoBehaviour {
         StartGame();
     }
 
+    GameObject popupObj;
+
     private void FlyTimePopUp(float time)
     {
+        if (popupObj) return;
+
         if(time >= 0.5f && time < 0.8f)
         {
-            InstantiatePopUp("GOOD !");
+            InstantiatePopUp("GOOD");
         }
         else if(time >= 0.8f && time < 1.25f)
         {
-            InstantiatePopUp("AMAZING !");
+            InstantiatePopUp("AMAZING");
         }
         else if(time > 1.25f)
         {
-            InstantiatePopUp("PERFECT !");
+            InstantiatePopUp("PERFECT");
         }
     }
 
     private void InstantiatePopUp(string text)
     {
-        var obj = Instantiate(popup, endGamePanel.transform.parent);
-        obj.GetComponent<Text>().text = text;
-        Destroy(obj, 2f);
+        popupObj = Instantiate(popup, endGamePanel.transform.parent);
+        popupObj.GetComponent<TMPro.TextMeshProUGUI>().text = text;
+        Destroy(popupObj, 2f);
     }
 
     public void StartGame()

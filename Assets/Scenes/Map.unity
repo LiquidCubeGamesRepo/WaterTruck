@@ -1044,7 +1044,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -5894,7 +5894,7 @@ MonoBehaviour:
   endGamePanel: {fileID: 660089568}
   pausePanel: {fileID: 1540095793}
   victoryPanel: {fileID: 596379100}
-  popup: {fileID: 1482240795050862, guid: b5ec4883107d24041aea3531ff1e0615, type: 2}
+  popup: {fileID: 1251877181251564, guid: b0f382eb2b68fc942892ebde260a987b, type: 2}
   restartButton: {fileID: 2112762284}
   restartButton1: {fileID: 975449948}
   backToMenuButton: {fileID: 1061285908}
