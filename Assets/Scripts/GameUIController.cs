@@ -64,10 +64,10 @@ public class GameUIController : MonoBehaviour {
     }
 
     GameObject popupObj;
-
+    float breakTime;
     private void FlyTimePopUp(float time)
     {
-        if (popupObj) return;
+        if (popupObj != null) return;
 
         if(time >= 0.5f && time < 0.8f)
         {

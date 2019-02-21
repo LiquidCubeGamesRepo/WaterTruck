@@ -35,7 +35,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4010732569272954}
   - component: {fileID: 212550636020791702}
-  - component: {fileID: 60230199965881640}
+  - component: {fileID: 60569759206097582}
   m_Layer: 0
   m_Name: platforma1_left
   m_TagString: Untagged
@@ -52,7 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4575357659250804}
   - component: {fileID: 212876375831269034}
-  - component: {fileID: 60067600800110058}
+  - component: {fileID: 60490078825526644}
   m_Layer: 0
   m_Name: platforma1_right
   m_TagString: Untagged
@@ -69,7 +69,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4304716123723380}
   - component: {fileID: 212999981347715586}
-  - component: {fileID: 60519215101550504}
+  - component: {fileID: 60908474018756212}
   m_Layer: 0
   m_Name: platforma1_center
   m_TagString: Untagged
@@ -99,7 +99,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1073383693892018}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.88, y: 0, z: 0}
+  m_LocalPosition: {x: -2.83, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4598114547004646}
@@ -125,7 +125,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1120811856393790}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.88, y: 0, z: 0}
+  m_LocalPosition: {x: 2.83, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4598114547004646}
@@ -139,7 +139,7 @@ Transform:
   m_GameObject: {fileID: 1695590754454434}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -7, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4010732569272954}
   - {fileID: 4304716123723380}
@@ -161,7 +161,7 @@ Transform:
   m_Father: {fileID: 4598114547004646}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &60067600800110058
+--- !u!60 &60490078825526644
 PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,7 +169,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 1120811856393790}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a101d2adad74a5f4db48876ba5615968, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -177,7 +177,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.89, y: 5.89}
+    oldSize: {x: 2.83, y: 11.69}
     newSize: {x: 1.89, y: 5.89}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -185,11 +185,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.945, y: -2.945}
-      - {x: -0.945, y: 2.735}
-      - {x: 0.945, y: 2.735}
-      - {x: 0.945, y: -2.945}
---- !u!60 &60230199965881640
+    - - {x: -1.415, y: -5.845}
+      - {x: -1.415, y: 2.665}
+      - {x: 1.415, y: 2.665}
+      - {x: 1.415, y: -5.845}
+--- !u!60 &60569759206097582
 PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -197,7 +197,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 1073383693892018}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a101d2adad74a5f4db48876ba5615968, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -205,7 +205,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.89, y: 5.89}
+    oldSize: {x: 2.83, y: 11.69}
     newSize: {x: 1.89, y: 5.89}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -213,11 +213,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.945, y: -2.945}
-      - {x: -0.945, y: 2.735}
-      - {x: 0.945, y: 2.735}
-      - {x: 0.945, y: -2.945}
---- !u!60 &60519215101550504
+    - - {x: -1.415, y: -5.845}
+      - {x: -1.415, y: 2.665}
+      - {x: 1.415, y: 2.665}
+      - {x: 1.415, y: -5.845}
+--- !u!60 &60908474018756212
 PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -225,7 +225,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 1658834750242096}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a101d2adad74a5f4db48876ba5615968, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -233,7 +233,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.89, y: 5.89}
+    oldSize: {x: 2.83, y: 11.69}
     newSize: {x: 1.89, y: 5.89}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -241,10 +241,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.945, y: -2.945}
-      - {x: -0.945, y: 2.735}
-      - {x: 0.945, y: 2.735}
-      - {x: 0.945, y: -2.945}
+    - - {x: -1.415, y: -5.845}
+      - {x: -1.415, y: 2.665}
+      - {x: 1.415, y: 2.665}
+      - {x: 1.415, y: -5.845}
 --- !u!212 &212550636020791702
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -280,7 +280,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 928b1e54a53747b4dabc1ed30dc6fc38, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3cc19e2cadc368c449296d13375bec13, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -326,7 +326,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6821d8c7a8cd05d44b7e21dc8afed843, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 17e905ce484733a40aa36464e3dc3152, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -372,7 +372,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f5ca23e07ee327f42ac90bbc39a40f2d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e5eb3065af6d8554bb2095a89499fa34, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
