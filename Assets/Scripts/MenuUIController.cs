@@ -55,19 +55,19 @@ public class MenuUIController : MonoBehaviour {
 
     public void Update()
     {
-        if (!GC.IsGamePlaying) {
-//#if UNITY_EDITOR
-            if (Input.GetButton("Accel"))
-            StartGame();
-//#elif UNITY_ANDROID
-//        if(Input.touchCount > 0)
-//        {
-//            Touch touch = Input.GetTouch(0);
-//            if (!EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-//                StartGame();
+//        if (!GC.IsGamePlaying) {
+////#if UNITY_EDITOR
+//            if (Input.GetButton("Accel"))
+//            StartGame();
+////#elif UNITY_ANDROID
+////        if(Input.touchCount > 0)
+////        {
+////            Touch touch = Input.GetTouch(0);
+////            if (!EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+////                StartGame();
+////        }
+////#endif
 //        }
-//#endif
-        }
     }
 
     private void StartGame(){

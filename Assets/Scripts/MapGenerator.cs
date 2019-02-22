@@ -54,6 +54,9 @@ public class MapGenerator : MonoBehaviour {
 
     private IEnumerator DestroyModules()
     {
+        //Give time to read tutorial
+        yield return new WaitForSeconds(5f);
+
         while (!GameController.Instance.raceOver)
         {
             if (modules.Count > 0)

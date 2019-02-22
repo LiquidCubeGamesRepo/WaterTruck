@@ -10,6 +10,7 @@ public class CollectableItem : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameController.Instance.gameData.coins++;
+        SoundController.Instance.PlayCoinsSound();
         coinsCollected.Invoke();
         Destroy(this.gameObject);
     }

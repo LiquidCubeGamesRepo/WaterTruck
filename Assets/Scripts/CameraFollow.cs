@@ -41,7 +41,7 @@ public class CameraFollow : MonoBehaviour {
     void FixedUpdate () {
         if (target)
         {
-            if (follow) { 
+            if (follow && !GameController.Instance.raceOver) { 
                 var pos = target.position;
                 pos.z = transform.position.z;
                 pos.y = Mathf.Clamp(pos.y, 0.25f, float.PositiveInfinity);

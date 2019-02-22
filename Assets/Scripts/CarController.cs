@@ -15,7 +15,6 @@ public class CarController : MonoBehaviour {
     [SerializeField] WheelJoint2D[] wheels;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] List<PolygonCollider2D> carColliders;
-    [SerializeField] GameObject additionWheelObject;
 
     float carSpeed;
     LiquidCounter lc;
@@ -77,23 +76,14 @@ public class CarController : MonoBehaviour {
         }
         else
             NoInput();
+
+        Debug.Log(Input.touchCount);
 #endif
     }
 
     internal void ChangeCar()
     {
         spriteRenderer.sprite = GameController.Instance.SelectedCar;
-        foreach (var col in carColliders) {
-            col.enabled = false;
-        }
-        carColliders[GameController.Instance.gameData.SelectedCar].enabled = true;
-
-        //if (GameController.Instance.playerSettings.currentCar == 1)
-        //{
-        //    additionWheelObject.SetActive(true);
-        //}
-        //else
-        //    additionWheelObject.SetActive(false);
     }
 
     public void NoInput()

@@ -10,7 +10,8 @@ public class GameUIController : MonoBehaviour {
     [SerializeField] GameObject endGamePanel;
     [SerializeField] GameObject pausePanel;
     [SerializeField] GameObject victoryPanel;
-    [SerializeField] GameObject popup;
+    [SerializeField] GameObject jumpPopup;
+    [SerializeField] GameObject addCoinsPopUp;
 
     [SerializeField] Button restartButton;
     [SerializeField] Button restartButton1;
@@ -72,22 +73,36 @@ public class GameUIController : MonoBehaviour {
         if(time >= 0.5f && time < 0.8f)
         {
             InstantiatePopUp("GOOD");
+            InstantiateAddCoinsText(5);
         }
         else if(time >= 0.8f && time < 1.25f)
         {
             InstantiatePopUp("AMAZING");
+            InstantiateAddCoinsText(10);
         }
         else if(time > 1.25f)
         {
             InstantiatePopUp("PERFECT");
+            InstantiateAddCoinsText(15);
         }
+
     }
 
     private void InstantiatePopUp(string text)
     {
-        popupObj = Instantiate(popup, endGamePanel.transform.parent);
+        popupObj = Instantiate(jumpPopup, endGamePanel.transform.parent);
         popupObj.GetComponent<TMPro.TextMeshProUGUI>().text = text;
         Destroy(popupObj, 2f);
+        SoundController.Instance.PlayCrashSound();
+    }
+
+    private void InstantiateAddCoinsText(int coinsAmount)
+    {
+        GameController.Instance.gameData.coins += coinsAmount;
+        popupObj = Instantiate(addCoinsPopUp, endGamePanel.transform.parent);
+        popupObj.GetComponent<TMPro.TextMeshProUGUI>().text = "+ " + coinsAmount.ToString();
+        Destroy(popupObj, 2f);
+        UpdateCoins();
     }
 
     public void StartGame()
@@ -136,7 +151,7 @@ public class GameUIController : MonoBehaviour {
 
     public void UpdateWaterCountText(int value)
     {
-        if (value <= lc.waterGameoverCount){
+        if (value <= lc.waterGameoverCount && !GameController.Instance.raceOver){
             GameOver();
         }
 
@@ -146,7 +161,7 @@ public class GameUIController : MonoBehaviour {
 
     public void UpdateDistanceProggres(int value)
     {
-        distanceProggresImage.fillAmount = dm.ProgressDistance;
+        distanceProggresImage.fillAmount = dm.ProgressDistance+0.05f;
     }
 
     public void UpdateCoins()
@@ -157,5 +172,20 @@ public class GameUIController : MonoBehaviour {
     public void FinishRace()
     {
         victoryPanel.SetActive(true);
+        endGamePanel.SetActive(false);
+        InstantiateAddCoinsText((GameController.Instance.gameData.currentLevel + 1) * 5);
+    }
+
+    private IEnumerator AddCoins()
+    {
+        var numberOfCoins = 0;
+        
+        while(numberOfCoins > 0)
+        {
+            GameController.Instance.gameData.coins++;
+            UpdateCoins();
+            yield return new WaitForSeconds(0.05f);
+            numberOfCoins--;
+        }
     }
 }

@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour {
     [SerializeField] public Sprite[] carSprites;
     [SerializeField] Color[] carColors;
     [SerializeField] AudioSource audioSource;
-    CarController carController;
+    public CarController carController;
 
     public Sprite SelectedCar
     {
@@ -55,8 +55,7 @@ public class GameController : MonoBehaviour {
     {
         if(loadMode == Mode.StartLevel)
         {
-            StartGame();
-            IsGamePlaying = false;
+            StartCoroutine(StartGameWithDelay());
         }
         else
         {
@@ -64,6 +63,13 @@ public class GameController : MonoBehaviour {
         }
 
         Init();
+    }
+
+    private IEnumerator StartGameWithDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        StartGame();
+        IsGamePlaying = false;
     }
 
     void OnDisable()  {

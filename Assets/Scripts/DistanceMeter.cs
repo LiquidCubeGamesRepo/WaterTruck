@@ -25,7 +25,7 @@ public class DistanceMeter : MonoBehaviour {
 
     private IEnumerator CountDistance()
     {
-        while (true)
+        while (!GameController.Instance.raceOver)
         {
             var pos = new Vector2(transform.position.x, 0f);
             distance = Vector2.Distance(pos, Vector2.zero);

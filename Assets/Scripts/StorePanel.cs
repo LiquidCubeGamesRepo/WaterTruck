@@ -113,7 +113,7 @@ public class StorePanel : MonoBehaviour {
         var rand = 0;
         while (data.storeCars[rand].isUnlocked == true)
         {
-            rand = UnityEngine.Random.Range(0, carsContent.transform.childCount - 1);
+            rand++;
         }
 
         Reset(StoreItemButton.ItemType.Car);
@@ -125,6 +125,8 @@ public class StorePanel : MonoBehaviour {
         UpdateContent(GameController.Instance.gameData.storeCars, carsContent);
         SnapToElement(rand, carsContent);
         UpdateCoins();
+
+        CheckForUnclockedContent();
 
         Data.SaveSettings();
     }
@@ -155,7 +157,7 @@ public class StorePanel : MonoBehaviour {
         var rand = 0;
         while (data.storeFluids[rand].isUnlocked == true)
         {
-            rand = UnityEngine.Random.Range(0, fluidContent.transform.childCount - 1);
+            rand++;
         }
 
         Reset(StoreItemButton.ItemType.Fluid);
@@ -167,6 +169,8 @@ public class StorePanel : MonoBehaviour {
         UpdateContent(GameController.Instance.gameData.storeFluids, fluidContent);
         SnapToElement(rand, fluidContent);
         UpdateCoins();
+
+        CheckForUnclockedContent();
 
         Data.SaveSettings();
     }

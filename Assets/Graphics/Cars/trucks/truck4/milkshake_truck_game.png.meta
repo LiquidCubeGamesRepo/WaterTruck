@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e8e1fe753a9ea16469b3c6202ee68e63
+guid: 5d14870d91bacef44973e59ea0e69e6d
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
@@ -45,12 +45,12 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 250
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: 0
+  spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -69,73 +69,13 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
-    buildTarget: Standalone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-  - serializedVersion: 2
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-  - serializedVersion: 2
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites: []
     outline: []
-    physicsShape:
-    - - {x: -55, y: -76.5}
-      - {x: -58, y: -55.5}
-      - {x: -78, y: -41.5}
-      - {x: -98, y: -41.5}
-      - {x: -112, y: -51.5}
-      - {x: -120, y: -64.5}
-      - {x: -118, y: -77.5}
-      - {x: -155, y: -77.5}
-      - {x: -165, y: 78.5}
-      - {x: -158, y: 78.5}
-      - {x: -147, y: -26.5}
-      - {x: 20, y: -25.5}
-      - {x: 29, y: 80.5}
-      - {x: 39, y: 80.5}
-      - {x: 31, y: -75.5}
-    - - {x: 131, y: -63.5}
-      - {x: 127, y: -54.5}
-      - {x: 102, y: -39.5}
-      - {x: 80, y: -49.5}
-      - {x: 70, y: -74.5}
-      - {x: 44, y: -72.5}
-      - {x: 46, y: 58.5}
-      - {x: 96, y: 58.5}
-      - {x: 111, y: 3.5}
-      - {x: 146, y: -8.5}
-      - {x: 160, y: -18.5}
-      - {x: 163, y: -65.5}
+    physicsShape: []
     bones: []
-    spriteID: b26c8e500dc63e64291c108db8d145dd
+    spriteID: df03be20064b8b940a21a1d047f3f56e
     vertices: []
     indices: 
     edges: []

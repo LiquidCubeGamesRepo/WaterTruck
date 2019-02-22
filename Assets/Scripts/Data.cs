@@ -34,10 +34,10 @@ public class Data {
             GameData data = new GameData();
 
             data.audioOn = false;
-            data.coins = 300;
+            data.coins = 3000;
 
             data.storeCars = new List<StoreItem>();
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
                 var item = new StoreItem();
                 if(i == 0)
